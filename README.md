@@ -15,12 +15,12 @@ The modified Oberon-07 compiler provided in **this** repository fixes that. This
 
 Points 1-5 are identical to https://github.com/andreaspirklbauer/Oberon-no-access-to-intermediate-objects, i.e.
 
-1. First, we recall that when a string is parsed, a string item x is created in *ORP.factor* using *ORG.MakeStringItem*, where *x.a* is set to the string buffer position (*strx*) and *x.b* to the string length (*len*). There are two cases: *declared* and *anonymous* string constants.
+1. First, we recall that when a string is parsed, a string item x is created in *ORP.factor* using *ORG.MakeStringItem*, where *x.a* is set to the string buffer position (*strx*) and *x.b* to the string length (*len*). There are two cases: declared string constants and string literals (anonymous string constants).
 
          MODULE M;
-           CONST s* = "declared string";  (*creates a named type in the symbol table of the compiler*)
+           CONST s* = "declared string constant";  (*creates a named type in the symbol table of the compiler*)
            VAR a: ARRAY 32 OF CHAR;
-         BEGIN a := "anonymous string"
+         BEGIN a := "string literal"
          END M.
 
 2. The field *obj.lev* is no longer "abused" to hold the length (*len*) of string constants. Instead, the length of a string constant is now encoded and stored together with its string buffer position (*strx*) in the field *obj.val*. This adds a single line to procedure *ORP.Declarations*
